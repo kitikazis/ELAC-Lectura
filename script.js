@@ -313,51 +313,19 @@ function login() {
   }
 }
 
-function showRegister() {
-  showScreen("registerScreen")
+function showStudentLogin() {
+  showScreen("studentLoginScreen")
 }
 
 function showLogin() {
   showScreen("loginScreen")
 }
 
-function register() {
-  const dni = document.getElementById("regDni").value
-  const nombres = document.getElementById("regNombres").value
-  const apellidos = document.getElementById("regApellidos").value
-  const genero = document.getElementById("regGenero").value
+function studentLogin() {
+  const name = document.getElementById("studentName").value.trim()
+  const roomCode = document.getElementById("studentRoomCode").value.trim()
 
-  if (!dni || !nombres || !apellidos || !genero) {
-    alert("Por favor completa todos los campos")
-    return
-  }
-
-  // Guardar usuario registrado
-  const users = JSON.parse(localStorage.getItem("registeredUsers") || "{}")
-  users[dni] = { nombres, apellidos, genero }
-  localStorage.setItem("registeredUsers", JSON.stringify(users))
-
-  gameState.currentUser = dni
-  gameState.isAdmin = false
-  showScreen("roomScreen")
-}
-
-function logout() {
-  gameState.currentUser = null
-  gameState.isAdmin = false
-  gameState.roomCode = null
-  gameState.codeExpiration = null
-  gameState.codeTimer = null
-  gameState.selectedCategory = null
-  showScreen("loginScreen")
-}
-
-// Funciones del juego
-function joinRoom() {
-  const dni = document.getElementById("userDni").value
-  const roomCode = document.getElementById("roomCode").value
-
-  if (!dni || !roomCode) {
+  if (!name || !roomCode) {
     alert("Por favor completa todos los campos")
     return
   }
@@ -381,12 +349,6 @@ function joinRoom() {
     return
   }
 
-  const users = JSON.parse(localStorage.getItem("registeredUsers") || "{}")
-  if (!users[dni]) {
-    alert("DNI no registrado. Por favor regístrate primero.")
-    return
-  }
-
   // Cargar datos de la categoría activa
   gameState.selectedCategory = activeCategory
   gameState.gameData = {
@@ -394,10 +356,12 @@ function joinRoom() {
     questions: [...gameState.categories[activeCategory].questions],
   }
 
-  gameState.currentUser = dni
+  gameState.currentUser = name
+  gameState.isAdmin = false
   startReading()
 }
 
+// Funciones del juego
 function startReading() {
   showScreen("readingScreen")
   document.getElementById("readingTextDisplay").textContent = gameState.gameData.readingText

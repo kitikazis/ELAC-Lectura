@@ -7,41 +7,45 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Pantalla de Login -->
+     Pantalla de Login Principal 
     <div id="loginScreen" class="screen active">
         <div class="container">
             <h1>Juego de Lectura</h1>
-            <div class="login-form">
-                <h2>Iniciar Sesión</h2>
-                <input type="text" id="loginUser" placeholder="Usuario" value="USER">
-                <input type="password" id="loginPass" placeholder="Contraseña" value="123">
-                <button onclick="login()">Entrar</button>
-                <p><a href="#" onclick="showRegister()">¿No tienes cuenta? Regístrate</a></p>
+            <div class="login-options">
+                <div class="login-card admin-login">
+                    <h2>👨‍🏫 Administrador</h2>
+                    <div class="login-form">
+                        <input type="text" id="loginUser" placeholder="Usuario" value="Leonardo">
+                        <input type="password" id="loginPass" placeholder="Contraseña" value="0000001">
+                        <button onclick="login()">Entrar como Admin</button>
+                    </div>
+                </div>
+                
+                <div class="login-divider">O</div>
+                
+                <div class="login-card student-login">
+                    <h2>👨‍🎓 Estudiante</h2>
+                    <p>Ingresa tu nombre y el código de sala</p>
+                    <button onclick="showStudentLogin()" class="student-btn">Ingresar como Estudiante</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Pantalla de Registro -->
-    <div id="registerScreen" class="screen">
+     Nueva pantalla de login para estudiantes 
+    <div id="studentLoginScreen" class="screen">
         <div class="container">
-            <h2>Registro de Usuario</h2>
-            <div class="register-form">
-                <input type="text" id="regDni" placeholder="DNI" maxlength="8">
-                <input type="text" id="regNombres" placeholder="Nombres">
-                <input type="text" id="regApellidos" placeholder="Apellidos">
-                <select id="regGenero">
-                    <option value="">Seleccionar Género</option>
-                    <option value="masculino">Masculino</option>
-                    <option value="femenino">Femenino</option>
-                    <option value="otro">Otro</option>
-                </select>
-                <button onclick="register()">Registrarse</button>
-                <p><a href="#" onclick="showLogin()">¿Ya tienes cuenta? Inicia sesión</a></p>
+            <h2>Ingreso de Estudiante</h2>
+            <div class="student-form">
+                <input type="text" id="studentName" placeholder="Tu nombre completo">
+                <input type="text" id="studentRoomCode" placeholder="Código de sala (6 caracteres)">
+                <button onclick="studentLogin()">Ingresar a la Sala</button>
+                <button onclick="showLogin()" class="back-btn">← Volver</button>
             </div>
         </div>
     </div>
 
-    <!-- Panel de Admin -->
+     Panel de Admin 
     <div id="adminScreen" class="screen">
         <div class="container">
             <div class="admin-header">
@@ -55,14 +59,14 @@
             </div>
             
             <div class="admin-panel">
-                <!-- Gestión de categorías mejorada -->
+                 Gestión de categorías mejorada 
                 <div class="section category-management">
                     <h3>📚 Gestión de Categorías</h3>
                     <div class="category-grid">
                         <div class="category-list">
                             <h4>Categorías Disponibles</h4>
                             <div id="categoriesList" class="categories-container">
-                                <!-- Las categorías se cargarán aquí -->
+                                 Las categorías se cargarán aquí 
                             </div>
                         </div>
                         <div class="category-form">
@@ -73,7 +77,7 @@
                     </div>
                 </div>
                 
-                <!-- Gestión de sala mejorada -->
+                 Gestión de sala mejorada 
                 <div class="section room-management">
                     <h3>🎯 Control de Sala</h3>
                     <div class="room-info">
@@ -97,7 +101,7 @@
                     </div>
                 </div>
                 
-                <!-- Editor de contenido mejorado -->
+                 Editor de contenido mejorado 
                 <div class="section content-editor" id="contentEditor" style="display: none;">
                     <h3>✏️ Editor de Contenido</h3>
                     <div class="editor-tabs">
@@ -119,10 +123,10 @@
                     <div id="questionsTab" class="tab-content">
                         <div class="questions-header">
                             <h4>Preguntas de Comprensión</h4>
-                            <button onclick="adminController.addQuestion()" class="add-question-btn">➕ Agregar Pregunta</button>
+                            <button onclick="addQuestion()" class="add-question-btn">➕ Agregar Pregunta</button>
                         </div>
                         <div id="questionsContainer" class="questions-container">
-                            <!-- Las preguntas se cargarán aquí -->
+                             Las preguntas se cargarán aquí 
                         </div>
                     </div>
                     
@@ -135,20 +139,7 @@
         </div>
     </div>
 
-    <!-- Pantalla de Ingreso a Sala -->
-    <div id="roomScreen" class="screen">
-        <div class="container">
-            <h2>Ingresar a Sala</h2>
-            <div class="room-form">
-                <input type="text" id="userDni" placeholder="Tu DNI">
-                <input type="text" id="roomCode" placeholder="Código de Sala">
-                <button onclick="joinRoom()">Ingresar a Sala</button>
-                <button onclick="logout()">Cerrar Sesión</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pantalla de Lectura -->
+     Pantalla de Lectura 
     <div id="readingScreen" class="screen">
         <div class="container">
             <h2>Tiempo de Lectura</h2>
@@ -162,29 +153,28 @@
         </div>
     </div>
 
-    <!-- Pantalla de Preguntas -->
+     Pantalla de Preguntas 
     <div id="questionsScreen" class="screen">
         <div class="container">
             <h2>Preguntas</h2>
             <div id="questionsDisplay">
-                <!-- Las preguntas se mostrarán aquí -->
+                 Las preguntas se mostrarán aquí 
             </div>
             <button id="submitAnswers" onclick="submitAnswers()" style="display: none;">Enviar Respuestas</button>
         </div>
     </div>
 
-    <!-- Pantalla de Resultados -->
+     Pantalla de Resultados 
     <div id="resultsScreen" class="screen">
         <div class="container">
             <h2>Resultados</h2>
             <div id="resultsDisplay">
-                <!-- Los resultados se mostrarán aquí -->
+                 Los resultados se mostrarán aquí 
             </div>
             <button onclick="restartGame()">Jugar de Nuevo</button>
         </div>
     </div>
 
-    <script src="admin-controller.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
