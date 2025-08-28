@@ -4,177 +4,311 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego de Lectura</title>
+    <!-- Agregando Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Agregando Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-     Pantalla de Login Principal 
-    <div id="loginScreen" class="screen active">
-        <div class="container">
-            <h1>Juego de Lectura</h1>
-            <div class="login-options">
-                <div class="login-card admin-login">
-                    <h2>👨‍🏫 Administrador</h2>
-                    <div class="login-form">
-                        <input type="text" id="loginUser" placeholder="Usuario" value="Leonardo">
-                        <input type="password" id="loginPass" placeholder="Contraseña" value="0000001">
-                        <button onclick="login()">Entrar como Admin</button>
+    <!-- Agregando header con nombre de usuario -->
+    <div id="userHeader" class="user-header d-none">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-info mb-0 text-center">
+                        <strong>👋 Bienvenido(a): <span id="currentUserName"></span></strong>
                     </div>
                 </div>
-                
-                <div class="login-divider">O</div>
-                
-                <div class="login-card student-login">
-                    <h2>👨‍🎓 Estudiante</h2>
-                    <p>Ingresa tu nombre y el código de sala</p>
-                    <button onclick="showStudentLogin()" class="student-btn">Ingresar como Estudiante</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Login Principal -->
+    <div id="loginScreen" class="screen active">
+        <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+            <!-- Mejorando diseño inicial con mejor centrado y espaciado -->
+            <div class="row justify-content-center w-100">
+                <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+                    <div class="text-center mb-5">
+                        <h1 class="display-4 fw-bold text-primary mb-3">📚 Juego de Lectura</h1>
+                        <p class="lead text-muted">Plataforma educativa interactiva</p>
+                    </div>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="card h-100 shadow-lg border-0 admin-card">
+                                <div class="card-body text-center p-4">
+                                    <div class="mb-4">
+                                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <i class="fas fa-user-tie fs-1 text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <h3 class="card-title mb-3">👨‍🏫 Administrador</h3>
+                                    <p class="text-muted mb-4">Gestiona categorías y genera códigos de sala</p>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control form-control-lg mb-3" id="loginUser" placeholder="Usuario" value="Leonardo">
+                                        <input type="password" class="form-control form-control-lg mb-4" id="loginPass" placeholder="Contraseña" value="0000001">
+                                        <button class="btn btn-primary btn-lg w-100" onclick="login()">
+                                            <i class="fas fa-sign-in-alt me-2"></i>Entrar como Admin
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card h-100 shadow-lg border-0 student-card">
+                                <div class="card-body text-center p-4">
+                                    <div class="mb-4">
+                                        <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <i class="fas fa-graduation-cap fs-1 text-success"></i>
+                                        </div>
+                                    </div>
+                                    <h3 class="card-title mb-3">👨‍🎓 Estudiante</h3>
+                                    <p class="text-muted mb-4">Ingresa con tu nombre y código de sala</p>
+                                    <button class="btn btn-success btn-lg w-100" onclick="showStudentLogin()">
+                                        <i class="fas fa-play me-2"></i>Ingresar como Estudiante
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-     Nueva pantalla de login para estudiantes 
+    <!-- Nueva pantalla de login para estudiantes -->
     <div id="studentLoginScreen" class="screen">
-        <div class="container">
-            <h2>Ingreso de Estudiante</h2>
-            <div class="student-form">
-                <input type="text" id="studentName" placeholder="Tu nombre completo">
-                <input type="text" id="studentRoomCode" placeholder="Código de sala (6 caracteres)">
-                <button onclick="studentLogin()">Ingresar a la Sala</button>
-                <button onclick="showLogin()" class="back-btn">← Volver</button>
+        <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+            <!-- Mejorando pantalla de login de estudiante con información de categoría -->
+            <div class="row justify-content-center w-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-header bg-success text-white text-center py-4">
+                            <h2 class="mb-0">👨‍🎓 Ingreso de Estudiante</h2>
+                        </div>
+                        <div class="card-body p-4">
+                            <!-- Agregando información de categoría activa -->
+                            <div id="categoryInfo" class="alert alert-info text-center mb-4" style="display: none;">
+                                <h5 class="mb-1">📚 Categoría Activa</h5>
+                                <span id="activeCategoryName" class="fw-bold"></span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Tu nombre completo:</label>
+                                <input type="text" class="form-control form-control-lg" id="studentName" placeholder="Escribe tu nombre aquí...">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Código de sala:</label>
+                                <input type="text" class="form-control form-control-lg text-center" id="studentRoomCode" placeholder="Código de 6 caracteres" maxlength="6" style="letter-spacing: 2px; font-weight: bold;">
+                            </div>
+                            
+                            <button class="btn btn-success btn-lg w-100 mb-3" onclick="studentLogin()">
+                                <i class="fas fa-door-open me-2"></i>Ingresar a la Sala
+                            </button>
+                            <button class="btn btn-outline-secondary w-100" onclick="showLogin()">
+                                <i class="fas fa-arrow-left me-2"></i>Volver
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-     Panel de Admin 
+    <!-- Panel de Admin -->
     <div id="adminScreen" class="screen">
-        <div class="container">
-            <div class="admin-header">
-                <h2>Panel de Administrador - Leonardo</h2>
-                <div class="admin-actions">
-                    <button onclick="exportData()" class="export-btn">📥 Exportar</button>
-                    <button onclick="importData()" class="import-btn">📤 Importar</button>
-                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleFileImport(event)">
-                    <button onclick="logout()" class="logout-btn">Cerrar Sesión</button>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0">👨‍🏫 Panel de Administrador - Leonardo</h2>
+                            <div>
+                                <button class="btn btn-outline-info btn-sm me-2" onclick="exportData()">📥 Exportar</button>
+                                <button class="btn btn-outline-warning btn-sm me-2" onclick="importData()">📤 Importar</button>
+                                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleFileImport(event)">
+                                <button class="btn btn-outline-danger btn-sm" onclick="logout()">Cerrar Sesión</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="admin-panel">
-                 Gestión de categorías mejorada 
-                <div class="section category-management">
-                    <h3>📚 Gestión de Categorías</h3>
-                    <div class="category-grid">
-                        <div class="category-list">
-                            <h4>Categorías Disponibles</h4>
-                            <div id="categoriesList" class="categories-container">
-                                 Las categorías se cargarán aquí 
-                            </div>
+            <!-- Usando Bootstrap grid y cards para mejor organización -->
+            <div class="row g-3">
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">📚 Gestión de Categorías</h3>
                         </div>
-                        <div class="category-form">
-                            <h4>Nueva Categoría</h4>
-                            <input type="text" id="newCategoryName" placeholder="Nombre (ej: Biología, Historia)">
-                            <button onclick="createCategory()" class="create-btn">➕ Crear Categoría</button>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <h5>Categorías Disponibles</h5>
+                                    <div id="categoriesList" class="categories-container">
+                                        <!-- Las categorías se cargarán aquí -->
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <h5>Nueva Categoría</h5>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="newCategoryName" placeholder="Nombre (ej: Biología, Historia)">
+                                        <button class="btn btn-success" onclick="createCategory()">➕ Crear</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                 Gestión de sala mejorada 
-                <div class="section room-management">
-                    <h3>🎯 Control de Sala</h3>
-                    <div class="room-info">
-                        <div class="selected-category">
-                            <strong>Categoría Activa:</strong> 
-                            <span id="selectedCategoryName">Ninguna seleccionada</span>
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">🎯 Control de Sala</h3>
                         </div>
-                        <div class="code-status">
-                            <div class="code-display">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <strong>Categoría Activa:</strong> 
+                                <span id="selectedCategoryName" class="badge bg-secondary">Ninguna seleccionada</span>
+                            </div>
+                            <div class="mb-3">
                                 <strong>Código Actual:</strong> 
-                                <span id="currentRoomCode" class="room-code">-</span>
+                                <span id="currentRoomCode" class="badge bg-primary fs-6">-</span>
                             </div>
-                            <div class="time-display">
+                            <div class="mb-3">
                                 <strong>Tiempo Restante:</strong> 
-                                <span id="codeTimeLeft" class="time-left">-</span>
+                                <span id="codeTimeLeft" class="badge bg-warning text-dark">-</span>
                             </div>
+                            <button class="btn btn-success w-100" onclick="generateRoomCode()" id="generateCodeBtn" disabled>
+                                🚀 Generar Código (5 min)
+                            </button>
                         </div>
-                        <button onclick="generateRoomCode()" id="generateCodeBtn" class="generate-btn" disabled>
-                            🚀 Generar Código (5 min)
-                        </button>
                     </div>
                 </div>
-                
-                 Editor de contenido mejorado 
-                <div class="section content-editor" id="contentEditor" style="display: none;">
-                    <h3>✏️ Editor de Contenido</h3>
-                    <div class="editor-tabs">
-                        <button class="tab-btn active" onclick="showTab('text')">📖 Texto de Lectura</button>
-                        <button class="tab-btn" onclick="showTab('questions')">❓ Preguntas</button>
-                    </div>
-                    
-                    <div id="textTab" class="tab-content active">
-                        <div class="text-editor">
-                            <label>Texto para leer (60 segundos):</label>
-                            <textarea id="readingText" rows="8" placeholder="Ingresa el texto que los estudiantes deberán leer..."></textarea>
-                            <div class="text-stats">
-                                <span id="textLength">0 caracteres</span> | 
-                                <span id="readingTimeEst">~0 min lectura</span>
+            </div>
+            
+            <!-- Editor de contenido -->
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="card" id="contentEditor" style="display: none;">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">✏️ Editor de Contenido</h3>
+                            <ul class="nav nav-tabs card-header-tabs mt-2">
+                                <li class="nav-item">
+                                    <button class="nav-link active" onclick="showTab('text')">📖 Texto de Lectura</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" onclick="showTab('questions')">❓ Preguntas</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div id="textTab" class="tab-content active">
+                                <div class="mb-3">
+                                    <label class="form-label">Texto para leer (60 segundos):</label>
+                                    <textarea class="form-control" id="readingText" rows="8" placeholder="Ingresa el texto que los estudiantes deberán leer..."></textarea>
+                                    <div class="form-text">
+                                        <span id="textLength">0 caracteres</span> | 
+                                        <span id="readingTimeEst">~0 min lectura</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="questionsTab" class="tab-content" style="display: none;">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5>Preguntas de Comprensión</h5>
+                                    <button class="btn btn-success btn-sm" onclick="addQuestion()">➕ Agregar Pregunta</button>
+                                </div>
+                                <div id="questionsContainer">
+                                    <!-- Las preguntas se cargarán aquí -->
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary" onclick="saveAdminData()">💾 Guardar Cambios</button>
+                                <button class="btn btn-outline-info" onclick="previewContent()">👁️ Vista Previa</button>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div id="questionsTab" class="tab-content">
-                        <div class="questions-header">
-                            <h4>Preguntas de Comprensión</h4>
-                            <button onclick="addQuestion()" class="add-question-btn">➕ Agregar Pregunta</button>
-                        </div>
-                        <div id="questionsContainer" class="questions-container">
-                             Las preguntas se cargarán aquí 
-                        </div>
-                    </div>
-                    
-                    <div class="editor-actions">
-                        <button onclick="saveAdminData()" class="save-btn">💾 Guardar Cambios</button>
-                        <button onclick="previewContent()" class="preview-btn">👁️ Vista Previa</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-     Pantalla de Lectura 
+    <!-- Pantalla de Lectura -->
     <div id="readingScreen" class="screen">
         <div class="container">
-            <h2>Tiempo de Lectura</h2>
-            <div class="timer">Tiempo restante: <span id="timeLeft">60</span> segundos</div>
-            <div id="textContainer" class="text-container">
-                <p id="readingTextDisplay"></p>
-            </div>
-            <div class="progress-bar">
-                <div id="progressFill" class="progress-fill"></div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h2 class="mb-0">📖 Tiempo de Lectura</h2>
+                            <div class="alert alert-warning mt-2 mb-0">
+                                Tiempo restante: <strong><span id="timeLeft">60</span> segundos</strong>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="textContainer" class="text-container mb-3">
+                                <p id="readingTextDisplay" class="lead"></p>
+                            </div>
+                            <div class="progress">
+                                <div id="progressFill" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-     Pantalla de Preguntas 
+    <!-- Pantalla de Preguntas -->
     <div id="questionsScreen" class="screen">
         <div class="container">
-            <h2>Preguntas</h2>
-            <div id="questionsDisplay">
-                 Las preguntas se mostrarán aquí 
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center mb-0">❓ Preguntas</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="questionsDisplay">
+                                <!-- Las preguntas se mostrarán aquí -->
+                            </div>
+                            <button id="submitAnswers" class="btn btn-success w-100 mt-3" onclick="submitAnswers()" style="display: none;">Enviar Respuestas</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button id="submitAnswers" onclick="submitAnswers()" style="display: none;">Enviar Respuestas</button>
         </div>
     </div>
 
-     Pantalla de Resultados 
+    <!-- Pantalla de Resultados -->
     <div id="resultsScreen" class="screen">
         <div class="container">
-            <h2>Resultados</h2>
-            <div id="resultsDisplay">
-                 Los resultados se mostrarán aquí 
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center mb-0">🏆 Resultados</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="resultsDisplay">
+                                <!-- Los resultados se mostrarán aquí -->
+                            </div>
+                            <button class="btn btn-primary w-100 mt-3" onclick="restartGame()">🔄 Jugar de Nuevo</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button onclick="restartGame()">Jugar de Nuevo</button>
         </div>
     </div>
 
+    <!-- Agregando Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

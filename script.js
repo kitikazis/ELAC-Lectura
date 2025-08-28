@@ -306,6 +306,7 @@ function login() {
   if (user === "Leonardo" && pass === "0000001") {
     gameState.currentUser = user
     gameState.isAdmin = true
+    showUserHeader(user)
     initAdmin()
     showScreen("adminScreen")
   } else {
@@ -314,6 +315,19 @@ function login() {
 }
 
 function showStudentLogin() {
+  const savedRoomCode = localStorage.getItem("currentRoomCode")
+  const savedExpiration = localStorage.getItem("codeExpiration")
+  const activeCategory = localStorage.getItem("activeCategory")
+
+  // Mostrar información de categoría si hay código activo
+  if (savedRoomCode && savedExpiration && activeCategory && Date.now() < Number.parseInt(savedExpiration)) {
+    const categoryName = gameState.categories[activeCategory].name
+    document.getElementById("categoryInfo").style.display = "block"
+    document.getElementById("activeCategoryName").textContent = categoryName
+  } else {
+    document.getElementById("categoryInfo").style.display = "none"
+  }
+
   showScreen("studentLoginScreen")
 }
 
@@ -341,11 +355,21 @@ function studentLogin() {
 
   if (Date.now() >= Number.parseInt(savedExpiration)) {
     alert("El código de sala ha expirado")
+    localStorage.removeItem("currentRoomCode")
+    localStorage.removeItem("codeExpiration")
+    localStorage.removeItem("activeCategory")
     return
   }
 
   if (roomCode !== savedRoomCode) {
     alert("Código de sala incorrecto")
+    return
+  }
+
+  const categoryName = gameState.categories[activeCategory].name
+  const confirmStart = confirm(`¡Perfecto! Vas a jugar la categoría: "${categoryName}"\n\n¿Estás listo para comenzar?`)
+
+  if (!confirmStart) {
     return
   }
 
@@ -358,6 +382,7 @@ function studentLogin() {
 
   gameState.currentUser = name
   gameState.isAdmin = false
+  showUserHeader(name)
   startReading()
 }
 
@@ -478,7 +503,7 @@ function restartGame() {
   if (gameState.isAdmin) {
     showScreen("adminScreen")
   } else {
-    showScreen("roomScreen")
+    showScreen("studentLoginScreen")
   }
 }
 
@@ -539,18 +564,41 @@ function deleteCategory(key) {
   }
 }
 
+// Funciones para mostrar/ocultar header de usuario
+function showUserHeader(userName) {
+  const userHeader = document.getElementById("userHeader")
+  const currentUserName = document.getElementById("currentUserName")
+
+  currentUserName.textContent = userName
+  userHeader.classList.remove("d-none")
+}
+
+function hideUserHeader() {
+  const userHeader = document.getElementById("userHeader")
+  userHeader.classList.add("d-none")
+}
+
 function showTab(tabName) {
   // Ocultar todas las pestañas
   document.querySelectorAll(".tab-content").forEach((tab) => {
-    tab.classList.remove("active")
+    tab.style.display = "none"
   })
-  document.querySelectorAll(".tab-btn").forEach((btn) => {
+  document.querySelectorAll(".nav-link").forEach((btn) => {
     btn.classList.remove("active")
   })
 
   // Mostrar pestaña seleccionada
-  document.getElementById(tabName + "Tab").classList.add("active")
+  document.getElementById(tabName + "Tab").style.display = "block"
   event.target.classList.add("active")
+}
+
+// Función logout que oculta el header
+function logout() {
+  gameState.currentUser = null
+  gameState.isAdmin = false
+  gameState.selectedCategory = null
+  hideUserHeader()
+  showScreen("loginScreen")
 }
 
 function previewContent() {
@@ -651,41 +699,9 @@ function generateRoomCode() {
   localStorage.setItem("activeCategory", gameState.selectedCategory)
 
   startCodeTimer()
+
+  const categoryName = gameState.categories[gameState.selectedCategory].name
   alert(
-    `Código generado: ${code}\nCategoría: ${gameState.categories[gameState.selectedCategory].name}\nDuración: 5 minutos`,
+    `✅ Código generado exitosamente!\n\n📝 Código: ${code}\n📚 Categoría: ${categoryName}\n⏰ Duración: 5 minutos\n\nLos estudiantes pueden ingresar ahora con este código.`,
   )
-}
-
-function saveAdminData() {
-  if (!gameState.selectedCategory) {
-    alert("Por favor selecciona una categoría primero")
-    return
-  }
-
-  const readingText = document.getElementById("readingText").value
-  if (!readingText.trim()) {
-    alert("Por favor ingresa un texto de lectura")
-    return
-  }
-
-  if (gameState.gameData.questions.length === 0) {
-    alert("Por favor agrega al menos una pregunta")
-    return
-  }
-
-  // Validar que todas las preguntas estén completas
-  for (let i = 0; i < gameState.gameData.questions.length; i++) {
-    const q = gameState.gameData.questions[i]
-    if (!q.question.trim() || q.options.some((opt) => !opt.trim()) || !q.explanation.trim()) {
-      alert(`Por favor completa todos los campos de la pregunta ${i + 1}`)
-      return
-    }
-  }
-
-  gameState.categories[gameState.selectedCategory].readingText = readingText
-  gameState.categories[gameState.selectedCategory].questions = [...gameState.gameData.questions]
-
-  saveCategories()
-  loadCategoriesDisplay()
-  alert("Datos guardados correctamente")
 }

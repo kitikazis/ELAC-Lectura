@@ -21,6 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 70px; /* Espacio para el header fijo */
 }
 
 .container {
@@ -807,14 +808,25 @@ a:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.admin-login {
-  border-color: #667eea;
+.admin-login .card {
   background: linear-gradient(135deg, #f0f4ff 0%, #e6f3ff 100%);
+  border: 2px solid #667eea;
 }
 
-.student-login {
-  border-color: #48bb78;
+.student-login .card {
   background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+  border: 2px solid #48bb78;
+}
+
+.card {
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .login-divider {
@@ -956,6 +968,15 @@ a:hover {
     font-size: 16px;
     padding: 8px 16px;
   }
+
+  .screen.active {
+    padding-top: 80px;
+  }
+
+  .user-header .alert {
+    font-size: 12px;
+    padding: 8px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -975,4 +996,51 @@ a:hover {
   .admin-actions button {
     width: 100%;
   }
+}
+
+/* Agregando estilos para el header de usuario con Bootstrap */
+.user-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.user-header .alert {
+  margin: 0;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Mejoras para Bootstrap cards en login */
+.card {
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.admin-login .card {
+  background: linear-gradient(135deg, #f0f4ff 0%, #e6f3ff 100%);
+  border: 2px solid #667eea;
+}
+
+.student-login .card {
+  background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+  border: 2px solid #48bb78;
+}
+
+/* Estilos mejorados para badges Bootstrap */
+.badge {
+  font-size: 0.9em;
+  padding: 0.5em 0.8em;
 }
