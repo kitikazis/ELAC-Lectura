@@ -1,0 +1,91 @@
+{
+  "categories": {
+    "biologia": {
+      "name": "Biología",
+      "readingText": "La célula es la unidad básica de la vida. Todas las formas de vida están compuestas por una o más células. Las células pueden ser procariotas (sin núcleo definido) como las bacterias, o eucariotas (con núcleo definido) como las células animales y vegetales. La membrana celular controla lo que entra y sale de la célula, mientras que el citoplasma es el medio donde ocurren las reacciones químicas. En las células eucariotas, el núcleo contiene el ADN que dirige todas las actividades celulares.",
+      "questions": [
+        {
+          "question": "¿Cuál es la unidad básica de la vida?",
+          "options": ["El átomo", "La célula", "El tejido", "El órgano"],
+          "correct": 1,
+          "explanation": "La célula es considerada la unidad básica de la vida porque es la estructura más pequeña que puede realizar todas las funciones vitales."
+        },
+        {
+          "question": "¿Qué tipo de células NO tienen núcleo definido?",
+          "options": ["Eucariotas", "Procariotas", "Animales", "Vegetales"],
+          "correct": 1,
+          "explanation": "Las células procariotas, como las bacterias, no tienen un núcleo definido por una membrana."
+        }
+      ]
+    },
+    "tecnologia": {
+      "name": "Tecnología",
+      "readingText": "La inteligencia artificial (IA) es una rama de la informática que busca crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana. Esto incluye el aprendizaje, el razonamiento, la percepción y la toma de decisiones. El machine learning es una subdisciplina de la IA que permite a las máquinas aprender patrones a partir de datos sin ser programadas explícitamente. Las redes neuronales artificiales están inspiradas en el funcionamiento del cerebro humano y son fundamentales en el deep learning.",
+      "questions": [
+        {
+          "question": "¿Qué busca crear la inteligencia artificial?",
+          "options": ["Robots físicos", "Sistemas inteligentes", "Computadoras más rápidas", "Videojuegos"],
+          "correct": 1,
+          "explanation": "La IA busca crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana."
+        },
+        {
+          "question": "¿En qué se inspiran las redes neuronales artificiales?",
+          "options": ["En las plantas", "En el cerebro humano", "En los océanos", "En las montañas"],
+          "correct": 1,
+          "explanation": "Las redes neuronales artificiales están inspiradas en el funcionamiento del cerebro humano y sus conexiones neuronales."
+        }
+      ]
+    },
+    "filosofia": {
+      "name": "Filosofía",
+      "readingText": "La filosofía es el estudio de los problemas fundamentales relacionados con la existencia, el conocimiento, la verdad, la moral, la belleza, la mente y el lenguaje. Los filósofos utilizan métodos racionales como la argumentación lógica para examinar estas cuestiones. La filosofía se divide en varias ramas: la metafísica estudia la naturaleza de la realidad, la epistemología examina el conocimiento y la creencia, la ética se ocupa de los valores morales, y la estética analiza la belleza y el arte.",
+      "questions": [
+        {
+          "question": "¿Qué estudia la filosofía?",
+          "options": [
+            "Solo la religión",
+            "Problemas fundamentales de la existencia",
+            "Solo las matemáticas",
+            "Solo la historia"
+          ],
+          "correct": 1,
+          "explanation": "La filosofía estudia problemas fundamentales relacionados con la existencia, el conocimiento, la verdad, la moral y otros aspectos básicos de la experiencia humana."
+        },
+        {
+          "question": "¿Qué rama de la filosofía estudia la naturaleza de la realidad?",
+          "options": ["Epistemología", "Metafísica", "Ética", "Estética"],
+          "correct": 1,
+          "explanation": "La metafísica es la rama de la filosofía que estudia la naturaleza de la realidad, el ser y la existencia."
+        }
+      ]
+    },
+    "platon": {
+      "name": "Platón",
+      "readingText": "Platón (428-348 a.C.) fue un filósofo griego, discípulo de Sócrates y maestro de Aristóteles. Su obra más famosa es 'La República', donde expone su teoría del Estado ideal. Platón desarrolló la teoría de las Ideas o Formas, según la cual existe un mundo perfecto e inmutable de Ideas que es más real que el mundo sensible que percibimos. Para Platón, el conocimiento verdadero se obtiene a través de la razón, no de los sentidos. También creó la Academia, una de las primeras instituciones de educación superior en el mundo occidental.",
+      "questions": [
+        {
+          "question": "¿Cuál es la obra más famosa de Platón?",
+          "options": ["La Ética", "La República", "La Poética", "La Física"],
+          "correct": 1,
+          "explanation": "La República es la obra más famosa de Platón, donde expone su teoría del Estado ideal y la justicia."
+        },
+        {
+          "question": "Según Platón, ¿cómo se obtiene el conocimiento verdadero?",
+          "options": [
+            "A través de los sentidos",
+            "A través de la razón",
+            "A través de la experiencia",
+            "A través de la intuición"
+          ],
+          "correct": 1,
+          "explanation": "Para Platón, el conocimiento verdadero se obtiene a través de la razón, ya que los sentidos pueden engañarnos sobre la realidad."
+        }
+      ]
+    }
+  },
+  "users": {},
+  "settings": {
+    "readingTime": 60,
+    "codeExpiration": 300000
+  }
+}
