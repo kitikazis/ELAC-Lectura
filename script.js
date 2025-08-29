@@ -194,6 +194,16 @@ function loadQuestionsEditor() {
   })
 }
 
+function updateQuestion(index, field, value) {
+  gameState.gameData.questions[index][field] = value
+  saveCategories() // Guarda automáticamente
+}
+
+function updateQuestionOption(questionIndex, optionIndex, value) {
+  gameState.gameData.questions[questionIndex].options[optionIndex] = value
+  saveCategories() // Guarda automáticamente
+}
+
 function addQuestion() {
   gameState.gameData.questions.push({
     question: "",
@@ -201,12 +211,14 @@ function addQuestion() {
     correct: 0,
     explanation: "",
   })
+  saveCategories() // Guarda automáticamente
   loadQuestionsEditor()
 }
 
 function removeQuestion(index) {
   if (confirm("¿Estás seguro de eliminar esta pregunta?")) {
     gameState.gameData.questions.splice(index, 1)
+    saveCategories() // Guarda automáticamente
     loadQuestionsEditor()
   }
 }
@@ -220,15 +232,8 @@ function moveQuestion(index, direction) {
   gameState.gameData.questions[index] = gameState.gameData.questions[newIndex]
   gameState.gameData.questions[newIndex] = temp
 
+  saveCategories() // Guarda automáticamente
   loadQuestionsEditor()
-}
-
-function updateQuestion(index, field, value) {
-  gameState.gameData.questions[index][field] = value
-}
-
-function updateQuestionOption(questionIndex, optionIndex, value) {
-  gameState.gameData.questions[questionIndex].options[optionIndex] = value
 }
 
 function saveCategories() {
@@ -389,7 +394,12 @@ function studentLogin() {
 // Funciones del juego
 function startReading() {
   showScreen("readingScreen")
-  document.getElementById("readingTextDisplay").textContent = gameState.gameData.readingText
+  const text = gameState.gameData.readingText
+  const teleprompter = document.getElementById("teleprompterText")
+  // Divide el texto en líneas y crea divs responsivos
+  teleprompter.innerHTML = text.split('\n').map(line =>
+    `<div class="py-1">${line}</div>`
+  ).join('')
 
   let timeLeft = gameState.readingTime
   document.getElementById("timeLeft").textContent = timeLeft
@@ -398,19 +408,27 @@ function startReading() {
     timeLeft--
     document.getElementById("timeLeft").textContent = timeLeft
 
-    // Calcular opacidad y progreso
     const progress = ((gameState.readingTime - timeLeft) / gameState.readingTime) * 100
-    const opacity = timeLeft / gameState.readingTime
-
-    // Actualizar barra de progreso
     document.getElementById("progressFill").style.width = progress + "%"
-
-    // Desvanecer texto gradualmente
-    document.getElementById("textContainer").style.opacity = opacity
 
     if (timeLeft <= 0) {
       clearInterval(timer)
-      showQuestions()
+      // Desvanecer línea por línea
+      const lines = teleprompter.querySelectorAll('div')
+      let i = 0
+      const fadeTimer = setInterval(() => {
+        if (i < lines.length) {
+          lines[i].style.opacity = 0
+          lines[i].style.transition = "opacity 0.4s"
+          i++
+        } else {
+          clearInterval(fadeTimer)
+          setTimeout(() => {
+            teleprompter.innerHTML = ""
+            showQuestions()
+          }, 400)
+        }
+      }, 200)
     }
   }, 1000)
 }

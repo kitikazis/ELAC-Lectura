@@ -394,6 +394,10 @@ button:hover {
   margin-bottom: 20px;
   min-height: 200px;
   transition: opacity 0.1s linear;
+  font-size: 1.6rem;      /* Más grande para lectura cómoda */
+  line-height: 2.1;       /* Espaciado amplio entre líneas */
+  word-break: break-word;
+  letter-spacing: 0.5px;
 }
 
 .progress-bar {
@@ -1043,4 +1047,14 @@ a:hover {
 .badge {
   font-size: 0.9em;
   padding: 0.5em 0.8em;
+}
+
+#teleprompterText {
+  transition: top 1s linear;
+  white-space: pre-line;
+}
+
+#teleprompterText > div {
+  transition: opacity 0.4s;
+  padding: 0.5rem 0;      /* Espacio vertical entre líneas */
 }

@@ -2,7 +2,7 @@
   "categories": {
     "biologia": {
       "name": "Biología",
-      "readingText": "La célula es la unidad básica de la vida. Todas las formas de vida están compuestas por una o más células. Las células pueden ser procariotas (sin núcleo definido) como las bacterias, o eucariotas (con núcleo definido) como las células animales y vegetales. La membrana celular controla lo que entra y sale de la célula, mientras que el citoplasma es el medio donde ocurren las reacciones químicas. En las células eucariotas, el núcleo contiene el ADN que dirige todas las actividades celulares.",
+      "readingText": "La célula es la unidad básica de la vida. Todas las formas de vida están compuestas por una o más células. Las células pueden ser procariotas (sin núcleo definido) como las bacterias, o eucariotas (con núcleo definido) como las células animales y vegetales. La membrana celular controla lo que entra y sale de la célula, mientras que el citoplasma es el medio donde ocurren las reacciones químicas. En las células eucariotas, el núcleo contiene el ADN que dirige todas las actividades celulares.\n\nLa biología es la ciencia que estudia a los seres vivos y sus procesos vitales. Esta disciplina abarca una gran variedad de campos, como la genética, la ecología, la evolución, la fisiología y la anatomía. El estudio de la biología permite comprender cómo funcionan los organismos, cómo interactúan entre sí y con el entorno, y cómo han cambiado a lo largo del tiempo. Los biólogos investigan desde las moléculas más pequeñas que forman parte de la célula, hasta los ecosistemas más complejos que incluyen miles de especies diferentes.\n\nUno de los conceptos fundamentales en biología es la teoría celular, que establece que todos los seres vivos están formados por células y que la célula es la unidad estructural y funcional de los organismos. Las células pueden organizarse en tejidos, órganos y sistemas, permitiendo la especialización y la realización de funciones específicas. Por ejemplo, en los seres humanos, las células musculares permiten el movimiento, mientras que las células nerviosas transmiten información a través del cuerpo.\n\nLa genética es otra rama importante de la biología. Estudia cómo se heredan las características de una generación a otra a través de los genes, que son segmentos de ADN. El ADN contiene la información necesaria para construir y mantener un organismo. Las mutaciones en el ADN pueden provocar cambios en las características de los seres vivos y son la base de la evolución biológica. La evolución explica cómo las especies cambian y se adaptan a lo largo del tiempo, dando lugar a la diversidad de la vida en la Tierra.\n\nLa ecología estudia las relaciones entre los seres vivos y su entorno. Los organismos interactúan con otros seres vivos y con factores no vivos como el agua, el aire y el suelo. Estas interacciones forman ecosistemas, que pueden ser tan pequeños como una charca o tan grandes como una selva tropical. Los ecosistemas son dinámicos y pueden cambiar debido a factores naturales o a la actividad humana. La conservación de los ecosistemas es fundamental para mantener la biodiversidad y el equilibrio de la naturaleza.\n\nLa fisiología se ocupa de las funciones y procesos internos de los organismos. Por ejemplo, estudia cómo respiran, se alimentan, se reproducen y responden a estímulos del ambiente. La anatomía, por su parte, analiza la estructura de los seres vivos, desde la organización de las células hasta la disposición de los órganos y sistemas. El conocimiento de la fisiología y la anatomía es esencial para la medicina y la salud humana.\n\nEn resumen, la biología es una ciencia fascinante que nos ayuda a entender la vida en todas sus formas y niveles. Desde la célula más simple hasta los ecosistemas más complejos, la biología nos permite apreciar la diversidad y la belleza del mundo natural. Además, proporciona las bases para resolver problemas relacionados con la salud, el medio ambiente y la alimentación, contribuyendo al bienestar de la humanidad y del planeta.",
       "questions": [
         {
           "question": "¿Cuál es la unidad básica de la vida?",
@@ -42,12 +42,7 @@
       "questions": [
         {
           "question": "¿Qué estudia la filosofía?",
-          "options": [
-            "Solo la religión",
-            "Problemas fundamentales de la existencia",
-            "Solo las matemáticas",
-            "Solo la historia"
-          ],
+          "options": ["Solo la religión", "Problemas fundamentales de la existencia", "Solo las matemáticas", "Solo la historia"],
           "correct": 1,
           "explanation": "La filosofía estudia problemas fundamentales relacionados con la existencia, el conocimiento, la verdad, la moral y otros aspectos básicos de la experiencia humana."
         },
@@ -71,16 +66,16 @@
         },
         {
           "question": "Según Platón, ¿cómo se obtiene el conocimiento verdadero?",
-          "options": [
-            "A través de los sentidos",
-            "A través de la razón",
-            "A través de la experiencia",
-            "A través de la intuición"
-          ],
+          "options": ["A través de los sentidos", "A través de la razón", "A través de la experiencia", "A través de la intuición"],
           "correct": 1,
           "explanation": "Para Platón, el conocimiento verdadero se obtiene a través de la razón, ya que los sentidos pueden engañarnos sobre la realidad."
         }
       ]
+    },
+    "catorce": {
+      "name": "Catorce",
+      "readingText": "Dentro de tres días será 14 de julio y cumpliré 84. Nací la misma mañana que tú, Marisa; llegamos a la vez, en tanto que los franceses conmemoraban la toma de la Bastilla… Nunca fuiste una revolucionaria, y menos una caprichosa, de hecho, no elegiste el cuándo, mas, caprichosamente, te marchaste para siempre también un día 14, pero de un frío diciembre de hace un par de años. Yo tampoco he sido muy revolucionario, no obstante, mi mundo se revolucionó para mal desde el momento en el que desapareciste. Pronto descubrí que, al igual que en la letra de esa otra triste canción: «después de un invierno malo, una mala primavera…». Sí, se me cayó «una lágrima en la arena», y, con ese capricho con el que el destino sortea, unos meses más tarde me vi en esta lóbrega residencia. Me asignaron, como no, la habitación número 14…\n\nDicen que las matemáticas son perfectas, que no son endemoniadas, que explican el universo, pero no nos cuentan que a veces los números se burlan de nosotros. Fíjate, cariño, mis 84 veranos salen de multiplicar 14 por 6. Esa cifra nos ha estado persiguiendo a los dos desde que nacimos… Así pues, permíteme que me niegue a contar todos y cada uno de los radios de las ruedas de esta silla, no vaya a ser que sumen un múltiplo de ese recurrente doble dígito.\n\nNuestras vidas forman parte de un juego diminuto dentro de algo infinitamente grande. Somos horas, somos minutos, somos el tiempo que otros vivieron, y pronto, otros estarán viviendo el tiempo que vivirán los que habrán de venir después. Respiramos el mismo aire de una misma cueva, en un bucle de idas y venidas en el que, sin darnos cuenta, estamos relacionados, atrayéndonos los unos a los otros al igual que se atraen las estrellas del firmamento.\n\nAquí estoy, sentado en mi escritorio lupa en mano. Las cataratas y la presbicia hacen mal tándem, infinitamente peor que el que hacíamos tú y yo, cariño. Las palabras brotan desde mis dedos con facilidad, y otra noche más, hablo de este lugar, hablo de ti, también hablo para ese o esa que pudiera escucharme, para quien no me escuchará jamás. No debo esperar a que a la Piedad de turno le importe lo más mínimo las estúpidas elucubraciones de un viejo que se entretiene escribiendo. Sin embargo, de no hacer esto que estoy haciendo ahora mismo, ¿qué me quedaría? Nada… no me quedaría nada.\n\nEsta tarde luce gris extramuros, tan gris como la tarde en la que el cáncer te venció. No querrías salir a pasear conmigo con este tiempo, mi amor; el cielo se ha llenado de nubarrones y el viento está haciendo de las suyas… Amenaza tormenta. Lo observo desde mi ventana. ¡Qué pequeño me veo aquí dentro! No hay nadie afuera pensando en mí. ¡Ya ha sido bastante por hoy! Que descanse el bolígrafo. Es la hora de la cena.",
+      "questions": []
     }
   },
   "users": {},

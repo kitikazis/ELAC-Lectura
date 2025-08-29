@@ -241,28 +241,22 @@
 
     <!-- Pantalla de Lectura -->
     <div id="readingScreen" class="screen">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-header text-center">
-                            <h2 class="mb-0">📖 Tiempo de Lectura</h2>
-                            <div class="alert alert-warning mt-2 mb-0">
-                                Tiempo restante: <strong><span id="timeLeft">60</span> segundos</strong>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div id="textContainer" class="text-container mb-3">
-                                <p id="readingTextDisplay" class="lead"></p>
-                            </div>
-                            <div class="progress">
-                                <div id="progressFill" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <div class="container py-4">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8">
+            <div class="text-container bg-light rounded shadow-sm p-3 mb-3" style="min-height: 180px;">
+              <div id="teleprompterText"></div>
             </div>
+            <div class="d-flex align-items-center mb-2">
+              <span class="me-2">Tiempo restante:</span>
+              <span id="timeLeft" class="fw-bold"></span>
+            </div>
+            <div class="progress mb-3" style="height: 8px;">
+              <div id="progressFill" class="progress-bar bg-success" style="width: 0%;"></div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Pantalla de Preguntas -->
