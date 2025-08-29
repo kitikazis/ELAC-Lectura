@@ -746,3 +746,14 @@ function generateRoomCode() {
     `✅ Código generado exitosamente!\n\n📝 Código: ${code}\n📚 Categoría: ${categoryName}\n⏰ Duración: 5 minutos\n\nLos estudiantes pueden ingresar ahora con este código.`,
   )
 }
+
+function copyRoomCode() {
+  const code = document.getElementById("currentRoomCode").textContent.trim()
+  if (!code || code === "-") {
+    showNotification("No hay código para copiar", "warning")
+    return
+  }
+  navigator.clipboard.writeText(code)
+    .then(() => showNotification("Código copiado al portapapeles", "success"))
+    .catch(() => showNotification("No se pudo copiar el código", "error"))
+}
