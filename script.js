@@ -39,7 +39,7 @@ function showTab(tabName) {
 function login() {
   const user = document.getElementById("loginUser").value
   const pass = document.getElementById("loginPass").value
-  if (user === "Leonardo" && pass === "0000001") {
+  if (user === "Leonardo" && pass === "003") {
     gameState.currentUser = user
     gameState.isAdmin = true
     showUserHeader(user)
