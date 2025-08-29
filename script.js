@@ -127,7 +127,14 @@ function selectCategory(key) {
 
 function setupTextEditor() {
   const textArea = document.getElementById("readingText")
-  textArea.addEventListener("input", () => updateTextStats())
+  textArea.addEventListener("input", () => {
+    updateTextStats()
+    // Guardar automáticamente el texto editado
+    if (gameState.selectedCategory) {
+      gameState.categories[gameState.selectedCategory].readingText = textArea.value
+      saveCategories()
+    }
+  })
 }
 
 function updateTextStats() {
@@ -236,8 +243,20 @@ function moveQuestion(index, direction) {
   loadQuestionsEditor()
 }
 
+function showNotification(message, type = "success") {
+  let notif = document.createElement("div")
+  notif.className = `notification show ${type}`
+  notif.textContent = message
+  document.body.appendChild(notif)
+  setTimeout(() => {
+    notif.classList.remove("show")
+    setTimeout(() => notif.remove(), 300)
+  }, 1800)
+}
+
 function saveCategories() {
-  localStorage.setItem("gameCategories", JSON.stringify(gameState.categories))
+  localStorage.setItem("gameCategories", JSON.stringify(gameState.categories));
+  showNotification("¡Guardado correctamente!", "success");
 }
 
 function startCodeTimer() {
@@ -308,7 +327,7 @@ function login() {
   const user = document.getElementById("loginUser").value
   const pass = document.getElementById("loginPass").value
 
-  if (user === "Leonardo" && pass === "0000001") {
+  if (user === "Leonardo" && pass === "123") {
     gameState.currentUser = user
     gameState.isAdmin = true
     showUserHeader(user)
@@ -394,9 +413,13 @@ function studentLogin() {
 // Funciones del juego
 function startReading() {
   showScreen("readingScreen")
+  // Mostrar el título de la categoría
+  const categoryKey = gameState.selectedCategory
+  const categoryName = gameState.categories[categoryKey]?.name || ""
+  document.getElementById("readingTitle").textContent = categoryName
+
   const text = gameState.gameData.readingText
   const teleprompter = document.getElementById("teleprompterText")
-  // Divide el texto en líneas y crea divs responsivos
   teleprompter.innerHTML = text.split('\n').map(line =>
     `<div class="py-1">${line}</div>`
   ).join('')
