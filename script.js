@@ -7,15 +7,17 @@ const gameState = {
   codeTimer: null,
   selectedCategory: null,
   readingTime: 60,
-  categories: {}, // Se cargará desde Supabase
+  categories: {}, // Se cargará desde Supabase, ya no hay datos por defecto
   gameData: {
     readingText: "",
     questions: [],
   },
+  userAnswers: [],
 }
 
 // --- INICIALIZACIÓN ---
 document.addEventListener("DOMContentLoaded", async () => {
+  // Llama a la función de Supabase para cargar las categorías al iniciar
   await loadCategories()
   showScreen("loginScreen")
 })
@@ -32,14 +34,17 @@ function showTab(tabName) {
   document.querySelectorAll(".tab-content").forEach((tab) => (tab.style.display = "none"))
   document.querySelectorAll(".nav-link").forEach((btn) => btn.classList.remove("active"))
   document.getElementById(tabName + "Tab").style.display = "block"
-  event.target.classList.add("active")
+  // Asegurarse de que event.target exista
+  if (event && event.target) {
+    event.target.classList.add("active")
+  }
 }
 
 // --- AUTENTICACIÓN Y SESIÓN ---
 function login() {
   const user = document.getElementById("loginUser").value
   const pass = document.getElementById("loginPass").value
-  if (user === "Leonardo" && pass === "003") {
+  if (user === "Leonardo" && pass === "0000001") {
     gameState.currentUser = user
     gameState.isAdmin = true
     showUserHeader(user)
@@ -82,11 +87,13 @@ async function studentLogin() {
   startReading()
 }
 
-// --- GESTIÓN DE CATEGORÍAS (ADMIN) ---
+// --- GESTIÓN DE CATEGORÍAS (ADMIN - CONECTADO A SUPABASE) ---
 async function loadCategories() {
   const { data, error } = await supabaseClient.from("categories").select("*")
-  if (error) return showNotification("Error al cargar categorías", "error")
-
+  if (error) {
+    showNotification(`Error al cargar categorías: ${error.message}`, "error")
+    return
+  }
   gameState.categories = {}
   data.forEach((cat) => {
     gameState.categories[cat.key] = cat
@@ -114,14 +121,11 @@ function loadCategoriesDisplay() {
 async function createCategory() {
   const name = document.getElementById("newCategoryName").value.trim()
   if (!name) return alert("Por favor ingresa un nombre para la categoría")
-
   const key = name.toLowerCase().replace(/\s+/g, "_").replace(/[^\w-]/g, "")
   const newCategory = { key, name, readingText: "", questions: [] }
-
   const { error } = await supabaseClient.from("categories").insert([newCategory])
   if (error) return showNotification(`Error al crear: ${error.message}`, "error")
-
-  showNotification("Categoría creada exitosamente", "success")
+  showNotification("Categoría creada en Supabase", "success")
   document.getElementById("newCategoryName").value = ""
   await loadCategories()
 }
@@ -129,17 +133,15 @@ async function createCategory() {
 async function deleteCategory(key) {
   const categoryName = gameState.categories[key].name
   if (!confirm(`¿Estás seguro de eliminar la categoría "${categoryName}"?`)) return
-
   const { error } = await supabaseClient.from("categories").delete().eq("key", key)
   if (error) return showNotification(`Error al eliminar: ${error.message}`, "error")
-
   if (gameState.selectedCategory === key) {
     gameState.selectedCategory = null
     document.getElementById("contentEditor").style.display = "none"
     document.getElementById("selectedCategoryName").textContent = "Ninguna seleccionada"
     document.getElementById("generateCodeBtn").disabled = true
   }
-  showNotification("Categoría eliminada", "success")
+  showNotification("Categoría eliminada de Supabase", "success")
   await loadCategories()
 }
 
@@ -159,7 +161,7 @@ function loadCategoryData() {
   document.getElementById("readingText").value = category.readingText
   gameState.gameData = {
     readingText: category.readingText,
-    questions: structuredClone(category.questions || []), // Deep copy moderna
+    questions: structuredClone(category.questions || []),
   }
   loadQuestionsEditor()
   updateTextStats()
@@ -168,23 +170,25 @@ function loadCategoryData() {
 async function saveAdminData() {
   if (!gameState.selectedCategory) return
   const key = gameState.selectedCategory
-  const updatedCategory = {
-    key,
-    name: gameState.categories[key].name,
-    readingText: document.getElementById("readingText").value,
-    questions: gameState.gameData.questions,
-  }
+  
+  // Actualizar el objeto en gameState antes de guardar
+  gameState.categories[key].readingText = document.getElementById("readingText").value;
+  gameState.categories[key].questions = gameState.gameData.questions;
 
-  const { error } = await supabaseClient.from("categories").update(updatedCategory).eq("key", key)
+  const { error } = await supabaseClient.from("categories").update({
+    readingText: gameState.categories[key].readingText,
+    questions: gameState.categories[key].questions,
+  }).eq("key", key)
+
   if (error) return showNotification(`Error al guardar: ${error.message}`, "error")
 
   showNotification("Cambios guardados en Supabase", "success")
-  await loadCategories()
 }
 
 function loadQuestionsEditor() {
   const container = document.getElementById("questionsContainer")
   container.innerHTML = ""
+  if (!gameState.gameData.questions) gameState.gameData.questions = [];
   gameState.gameData.questions.forEach((q, i) => {
     const questionDiv = document.createElement("div")
     questionDiv.className = "question-item"
@@ -217,6 +221,7 @@ function updateQuestionOption(questionIndex, optionIndex, value) {
 }
 
 function addQuestion() {
+  if (!gameState.gameData.questions) gameState.gameData.questions = [];
   gameState.gameData.questions.push({ question: "", options: ["", "", "", ""], correct: 0, explanation: "" })
   loadQuestionsEditor()
 }
@@ -229,13 +234,10 @@ function removeQuestion(index) {
 // --- CONTROL DE SALA (ADMIN) ---
 async function generateRoomCode() {
   if (!gameState.selectedCategory) return alert("Por favor selecciona una categoría primero")
-
   const code = Math.random().toString(36).substring(2, 8).toUpperCase()
   const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString()
-
-  const { error } = await supabaseClient.from("room_codes").upsert({ code, category_key: gameState.selectedCategory, expires_at: expiresAt })
-  if (error) return showNotification("Error al guardar el código de sala", "error")
-
+  const { error } = await supabaseClient.from("room_codes").insert([{ code, category_key: gameState.selectedCategory, expires_at: expiresAt }])
+  if (error) return showNotification(`Error al generar código: ${error.message}`, "error")
   gameState.roomCode = code
   gameState.codeExpiration = new Date(expiresAt).getTime()
   document.getElementById("currentRoomCode").textContent = code
@@ -352,5 +354,47 @@ function hideUserHeader() {
 function updateTextStats() {
   const text = document.getElementById("readingText").value
   document.getElementById("textLength").textContent = `${text.length} caracteres`
+}
+
+// Funciones de Importar/Exportar (pueden ser útiles para backups)
+function exportData() {
+  const dataToExport = {
+    categories: gameState.categories,
+  }
+  const dataStr = JSON.stringify(dataToExport, null, 2)
+  const dataBlob = new Blob([dataStr], { type: "application/json" })
+  const link = document.createElement("a")
+  link.href = URL.createObjectURL(dataBlob)
+  link.download = `backup-lectura-${new Date().toISOString().split("T")[0]}.json`
+  link.click()
+  showNotification("Backup exportado como JSON", "info")
+}
+
+function importData() {
+  document.getElementById("importFile").click()
+}
+
+async function handleFileImport(event) {
+  const file = event.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = async (e) => {
+    try {
+      const importedData = JSON.parse(e.target.result)
+      if (importedData.categories) {
+        for (const key in importedData.categories) {
+          const category = importedData.categories[key]
+          await supabaseClient.from("categories").upsert(category)
+        }
+        showNotification("Datos importados y guardados en Supabase", "success")
+        await loadCategories()
+      } else {
+        alert("Archivo JSON no válido")
+      }
+    } catch (error) {
+      alert("Error al leer el archivo JSON")
+    }
+  }
+  reader.readAsText(file)
 }
 
